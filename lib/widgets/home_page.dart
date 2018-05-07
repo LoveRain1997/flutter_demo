@@ -1,126 +1,169 @@
+// Copyright 2016 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_xftz/widgets/main_tabs/all.dart';
 import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/all.dart';
 
-class _Page {
-  _Page({this.text, this.widget});
-  final String text;
-  final Widget widget;
-}
-
 class HomePage extends StatefulWidget {
+  static const String routeName = '/widgets/home_page';
+
   @override
-  HomePageState createState() => new HomePageState();
+  _BottomNavigationDemoState createState() => new _BottomNavigationDemoState();
 }
 
-class HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  PageController _pageController;
-  TabController _subController;
-
-  int _page = 0;
-
-  List<_Page> _allPages = <_Page>[
-    _Page(text: '最新', widget: SubTabRecentPage()),
-    _Page(text: '路演', widget: SubTabTextLivePage()),
-    _Page(text: '金评', widget: SubTabRecentPage()),
-    _Page(text: '直播', widget: SubTabRecentPage()),
-    _Page(text: '问答', widget: SubTabRecentPage()),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.history),
-              onPressed: () => print("file_download")),
-          IconButton(
-            icon: Icon(Icons.file_download),
-            onPressed: () => print("file_download"),
-          )
-        ],
-        title: Text("幸福黄金"),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.message),
-          onPressed: () => print("Icons.message"),
-        ),
-        bottom: _page == 0
-            ? TabBar(
-                controller: _subController,
-                isScrollable: false,
-                indicator: _getIndicator(),
-
-                tabs: _allPages.map((_Page page) {
-                  return Tab(text: page.text);
-                }).toList(),
-              )
-            : null,
-
-      ),
-      body: PageView(
-        children: <Widget>[
-          TabIndexPage(
-              _allPages.map((_Page page) {
-                return page.widget;
-              }).toList(),
-              _subController,
-              _page),
-          TabSubscribePage(),
-          TabLivePage(),
-          TabZonePage(),
-          TabMePage()
-        ],
-        controller: _pageController,
-        pageSnapping: true,
-        onPageChanged: (int index) {
-          setState(() {
-            _page = index;
-          });
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: _getNavBarItems(),
-        onTap: _navigationTapped,
-        currentIndex: _page,
-        type: BottomNavigationBarType.fixed,
-      ),
-    );
-  }
-
-  List<BottomNavigationBarItem> _getNavBarItems() {
-    return [
-      BottomNavigationBarItem(icon: Icon(Icons.home), title: new Text('首页')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.featured_play_list), title: new Text('订阅')),
-      BottomNavigationBarItem(icon: Icon(Icons.live_tv), title: new Text('直播')),
-      BottomNavigationBarItem(icon: Icon(Icons.group), title: new Text('圈子')),
-      BottomNavigationBarItem(icon: Icon(Icons.person), title: new Text('我的')),
-    ];
-  }
+class _BottomNavigationDemoState extends State<HomePage>
+    with TickerProviderStateMixin {
+  int _currentIndex = 0;
+  List<MainTab> _navigationViews;
+  List<_Page> _allPages;
 
   Decoration _getIndicator() {
     return const UnderlineTabIndicator();
   }
 
-  void _navigationTapped(int page) {
-    _pageController.animateToPage(page,
-        duration: const Duration(milliseconds: 300), curve: Curves.ease);
-  }
-
   @override
   void initState() {
     super.initState();
-    _pageController = new PageController();
-    _subController = new TabController(vsync: this, length: _allPages.length);
+
+    _allPages = <_Page>[
+      _Page(text: '最新', widget: SubTabRecentPage()),
+      _Page(text: '路演', widget: SubTabTextLivePage()),
+      _Page(text: '金评', widget: SubTabRecentPage()),
+      _Page(text: '直播', widget: SubTabRecentPage()),
+      _Page(text: '问答', widget: SubTabRecentPage()),
+    ];
+
+    _navigationViews = <MainTab>[
+      new TabIndexPage(
+        subTabPages: _allPages.map((_Page page) {
+          return page.widget;
+        }).toList(),
+        icon: Icon(Icons.home),
+        title: '首页',
+        vsync: this,
+      ),
+      new TabSubscribePage(
+        icon: Icon(Icons.featured_play_list),
+        title: '订阅',
+        vsync: this,
+      ),
+      new TabLivePage(
+        icon: const Icon(Icons.live_tv),
+        title: '直播',
+        vsync: this,
+      ),
+      new TabZonePage(
+        icon: const Icon(Icons.group),
+        title: '圈子',
+        vsync: this,
+      ),
+      new TabMePage(
+        icon: const Icon(Icons.person),
+        title: '我的',
+        vsync: this,
+      )
+    ];
+
+    for (MainTab view in _navigationViews)
+      view.controller.addListener(_rebuild);
+
+    _navigationViews[_currentIndex].controller.value = 1.0;
   }
 
   @override
   void dispose() {
+    for (MainTab view in _navigationViews) view.controller.dispose();
     super.dispose();
-    _pageController.dispose();
-    _subController.dispose();
   }
+
+  void _rebuild() {
+    setState(() {});
+  }
+
+  Widget _buildTransitionsStack() {
+    final List<FadeTransition> transitions = <FadeTransition>[];
+
+    for (MainTab view in _navigationViews)
+      transitions.add(view.transition(context));
+
+    transitions.sort((FadeTransition a, FadeTransition b) {
+      final Animation<double> aAnimation = a.opacity;
+      final Animation<double> bAnimation = b.opacity;
+      final double aValue = aAnimation.value;
+      final double bValue = bAnimation.value;
+      return aValue.compareTo(bValue);
+    });
+
+    return new Stack(children: transitions);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final BottomNavigationBar botNavBar = new BottomNavigationBar(
+      items: _navigationViews
+          .map((MainTab navigationView) => navigationView.item)
+          .toList(),
+      type: BottomNavigationBarType.fixed,
+      currentIndex: _currentIndex,
+      onTap: (int index) {
+        setState(() {
+          _navigationViews[_currentIndex].controller.reverse();
+          _currentIndex = index;
+          _navigationViews[_currentIndex].controller.forward();
+        });
+      },
+    );
+
+    return new Scaffold(
+      body: DefaultTabController(
+        length: _allPages.length,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                pinned: true,
+                floating: true,
+                actions: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.history),
+                      onPressed: () => print("file_download")),
+                  IconButton(
+                    icon: Icon(Icons.file_download),
+                    onPressed: () => print("file_download"),
+                  )
+                ],
+                title: Text("幸福黄金"),
+                centerTitle: true,
+                leading: IconButton(
+                  icon: Icon(Icons.message),
+                  onPressed: () => print("Icons.message"),
+                ),
+                bottom: _currentIndex == 0
+                    ? TabBar(
+                        isScrollable: false,
+                        indicator: _getIndicator(),
+                        tabs: _allPages.map((_Page page) {
+                          return Tab(text: page.text);
+                        }).toList(),
+                      )
+                    : null,
+              )
+            ];
+          },
+          body: Center(
+            child: _buildTransitionsStack(),
+          ),
+        ),
+      ),
+      bottomNavigationBar: botNavBar,
+    );
+  }
+}
+
+class _Page {
+  _Page({this.text, this.widget});
+  final String text;
+  final Widget widget;
 }

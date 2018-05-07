@@ -1,38 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xftz/widgets/main_tabs/main_tab_super.dart';
 
 
-class TabIndexPage extends StatefulWidget {
+class TabIndexPage   extends MainTab  {
 
-    TabIndexPage(this.subTabPages,this.subController,this.mainTapIndex,{ Key key }) : super(key: key);
-    TabController  subController;
-    List<Widget> subTabPages;
-    int mainTapIndex;
-  @override
-  _TabIndexPageState createState() => new _TabIndexPageState();
-}
+  TabIndexPage(   {
+    this.subTabPages,
+    Widget icon,
+    String title,
+    TickerProvider vsync,
+  }):super( icon:icon,title:title ,vsync:vsync);
 
-class _TabIndexPageState extends State<TabIndexPage>
-    with SingleTickerProviderStateMixin {
+  List<Widget> subTabPages;
 
-  @override
-  Widget build(BuildContext context) {
-    //final Color iconColor = Theme.of(context).accentColor;
+  FadeTransition transition(BuildContext context) {
+    Color iconColor;
 
-    return widget.mainTapIndex==0?new TabBarView(
-      children: widget.subTabPages,
-      controller: widget.subController,
-    ):new Container();
+    final ThemeData themeData = Theme.of(context);
+    iconColor = themeData.brightness == Brightness.light
+        ? themeData.primaryColor
+        : themeData.accentColor;
+
+
+    return new FadeTransition(
+      opacity:  animation,
+      child: new SlideTransition(
+        position: new Tween<Offset>(
+          begin: const Offset(0.0, 0.02), // Slightly down.
+          end: Offset.zero,
+        ).animate( animation),
+        child: new TabBarView(
+          children: subTabPages,
+        ) ,
+      ),
+    );
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
 
 }
