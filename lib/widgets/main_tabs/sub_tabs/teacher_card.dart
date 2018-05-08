@@ -32,7 +32,7 @@ class TeacherCard extends StatelessWidget {
                 width: width,
               ),
             ),
-            new BottomGradient.noOffset(),
+           // new BottomGradient(),
             new Padding(
               padding: const EdgeInsets.all(8.0),
               child: new Column(

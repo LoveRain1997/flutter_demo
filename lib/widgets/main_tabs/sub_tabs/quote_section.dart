@@ -6,8 +6,9 @@ import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/quote_card.dart';
 class QuoteSection extends StatelessWidget {
 
   final List<Quote> _quote;
+  TickerProvider vsync;
 
-  QuoteSection(this._quote);
+  QuoteSection(this._quote,{this.vsync});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class QuoteSection extends StatelessWidget {
             children: _quote.map((Quote quote) =>
             new Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: new QutoeCard(quote),
+              child: new QutoeCard(quote,vsync: vsync,),
             )
             ).toList(),
           ),

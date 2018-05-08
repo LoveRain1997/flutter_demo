@@ -21,7 +21,7 @@ class SubTabRecentPage extends StatefulWidget {
   _SubTabRecentPageState createState() => new _SubTabRecentPageState();
 }
 
-class _SubTabRecentPageState extends State<SubTabRecentPage> {
+class _SubTabRecentPageState extends State<SubTabRecentPage> with TickerProviderStateMixin {
   List<Widget> _imagePages;
   List<String> _urls = [
     'https://imgsa.baidu.com/news/q%3D100/sign=dbc6207d9e45d688a502b6a494c37dab/b64543a98226cffc062c56fcb5014a90f603ea7e.jpg',
@@ -41,6 +41,7 @@ class _SubTabRecentPageState extends State<SubTabRecentPage> {
       quoteNewList = _compareQuote(quoteNewList);
 
       _quoteOldList = quoteNewList;
+
 
       setState(() => _quoteList = quoteNewList);
     } catch (e) {
@@ -96,7 +97,7 @@ class _SubTabRecentPageState extends State<SubTabRecentPage> {
                     ? new Center(
                   child: new CircularProgressIndicator(),
                 )
-                    : new QuoteSection(_quoteList)),
+                    : new QuoteSection(_quoteList,vsync: this,)),
           )
         ],
       ),
