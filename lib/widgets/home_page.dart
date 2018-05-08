@@ -3,8 +3,11 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_xftz/scoped_models/app_model.dart';
+import 'package:flutter_xftz/utils/taskproviders.dart';
 import 'package:flutter_xftz/widgets/main_tabs/all.dart';
 import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/all.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/widgets/home_page';
@@ -19,6 +22,8 @@ class _BottomNavigationDemoState extends State<HomePage>
   List<MainTab> _navigationViews;
   List<_Page> _allPages;
 
+  final PriceTaskProvider takeProvider = new PriceTaskProvider();
+
   Decoration _getIndicator() {
     return const UnderlineTabIndicator();
   }
@@ -28,11 +33,11 @@ class _BottomNavigationDemoState extends State<HomePage>
     super.initState();
 
     _allPages = <_Page>[
-      _Page(text: '最新', widget: SubTabRecentPage()),
+      _Page(text: '最新', widget: SubTabRecentPage(takeProvider)),
       _Page(text: '路演', widget: SubTabTextLivePage()),
-      _Page(text: '金评', widget: SubTabRecentPage()),
-      _Page(text: '直播', widget: SubTabRecentPage()),
-      _Page(text: '问答', widget: SubTabRecentPage()),
+      _Page(text: '金评', widget: SubTabTextLivePage()),
+      _Page(text: '直播', widget: SubTabTextLivePage()),
+      _Page(text: '问答', widget: SubTabTextLivePage()),
     ];
 
     _navigationViews = <MainTab>[
@@ -126,6 +131,14 @@ class _BottomNavigationDemoState extends State<HomePage>
                 pinned: true,
                 floating: true,
                 actions: <Widget>[
+                  new ScopedModelDescendant<AppModel>(
+                    builder: (context, child, model) => new IconButton(
+                        icon: new Icon(
+                          Icons.color_lens,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => model.toggleTheme()),
+                  ),
                   IconButton(
                       icon: Icon(Icons.history),
                       onPressed: () => print("file_download")),

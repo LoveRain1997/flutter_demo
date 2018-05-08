@@ -34,6 +34,7 @@ final List<GalleryTheme> kAllGalleryThemes = <GalleryTheme>[
     theme: new ThemeData(
       brightness: Brightness.light,
       primarySwatch: Colors.blue,
+        backgroundColor:Colors.white
     ),
   ),
   new GalleryTheme(
