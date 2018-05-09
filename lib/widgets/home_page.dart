@@ -22,6 +22,9 @@ class _BottomNavigationDemoState extends State<HomePage>
   List<MainTab> _navigationViews;
   List<_Page> _allPages;
 
+  final keySubTabRecentPageState = new GlobalKey<SubTabRecentPageState>();
+
+
   final PriceTaskProvider takeProvider = new PriceTaskProvider();
 
   Decoration _getIndicator() {
@@ -33,7 +36,7 @@ class _BottomNavigationDemoState extends State<HomePage>
     super.initState();
 
     _allPages = <_Page>[
-      _Page(text: '最新', widget: SubTabRecentPage(takeProvider)),
+      _Page(text: '最新', widget: SubTabRecentPage(takeProvider,key: keySubTabRecentPageState,)),
       _Page(text: '路演', widget: SubTabTextLivePage()),
       _Page(text: '金评', widget: SubTabTextLivePage()),
       _Page(text: '直播', widget: SubTabTextLivePage()),

@@ -1,14 +1,44 @@
 import 'package:flutter/material.dart';
 
-class BottomGradient extends StatelessWidget {
 
+import 'package:flutter/material.dart';
+
+
+
+class _BottomGradientState extends State<BottomGradient> {
+  @override
+  Widget build(BuildContext context) {
+
+    if (widget.isShow) {
+      widget.controller.forward();
+    } else {
+      widget.controller.reverse();
+    }
+    //todo 需要更平滑的切换动画
+    return !widget.isShow?DecoratedBox(decoration:BoxDecoration(color:Color(0x88E3F2FD)) ):
+    FadeTransition(
+      opacity: widget.animation,
+      child:   new DecoratedBox(
+        decoration: new BoxDecoration(
+            color:widget.isUp?Color(0x88FFEBEE):Color(0x88E8F5E9)
+        ),
+      ),
+    )
+    ;
+  }
+}
+
+
+class BottomGradient extends StatefulWidget {
+
+  @override
+  _BottomGradientState createState() => new _BottomGradientState();
 
   TickerProvider vsync;
   AnimationController controller;
   CurvedAnimation animation;
 
 
-  ColorTween _bgColor;
 
   bool isUp;
   bool isShow;
@@ -19,37 +49,11 @@ class BottomGradient extends StatelessWidget {
     );
     this.animation = new CurvedAnimation(
       parent: this.controller,
-      curve: const Interval(0.0, 1.0, curve: Curves.fastOutSlowIn),
+      curve: const Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
     );
   }
 
 
-  @override
-  Widget build(BuildContext context) {
-//
-//
-//    _bgColor
-//      ..begin = Color(0x88FFEBEE)
-//      ..end =  Colors.green ;
-//
-//    final Color borderSideColor = _bgColor.evaluate(_easeOutAnimation) ?? Colors.transparent;
-//    final Color titleColor = _bgColor.evaluate(_easeInAnimation);
-    if (isShow) {
-      controller.forward();
-    } else {
-      controller.reverse();
-    }
 
-    return
-      FadeTransition(
-        opacity: animation,
-        child:   new DecoratedBox(
-          decoration: new BoxDecoration(
-              color: isUp?Color(0x88FFEBEE):Color(0x88E8F5E9)
-          ),
-        ),
-      )
-    ;
-  }
 }
 

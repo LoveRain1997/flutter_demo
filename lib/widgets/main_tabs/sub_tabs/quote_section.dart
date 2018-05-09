@@ -12,19 +12,19 @@ class QuoteSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
+    return   Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        new Text("自选行情", ),
-        new Container(height: 8.0,),
-        new Container(
+          Text("自选行情", ),
+          Container(height: 8.0,),
+          Container(
           height: 140.0,
-          child: new ListView(
+          child:   ListView(
             scrollDirection: Axis.horizontal,
             children: _quote.map((Quote quote) =>
-            new Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: new QutoeCard(quote,vsync: vsync,),
+              Padding(
+              padding:   EdgeInsets.only(right: 8.0),
+              child:   QutoeCard(quote,vsync: vsync,),
             )
             ).toList(),
           ),

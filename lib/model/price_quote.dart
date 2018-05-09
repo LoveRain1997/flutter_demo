@@ -14,8 +14,8 @@ class Quote {
    String ProductCode;
    String ProductName;
 
-   double UpsAndDowns; //本地计算涨跌
-   double UpsAndDownsRate ;//涨跌率
+   double UpsAndDowns=0.0; //本地计算涨跌
+   double UpsAndDownsRate=0.0 ;//涨跌率
 
 
    Quote.fromJson(Map jsonMap)
