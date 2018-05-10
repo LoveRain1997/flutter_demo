@@ -7,7 +7,7 @@ import 'package:flutter_xftz/scoped_models/app_model.dart';
 import 'package:flutter_xftz/utils/taskproviders.dart';
 import 'package:flutter_xftz/widgets/main_tabs/all.dart';
 import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/all.dart';
-  import 'package:scoped_model/scoped_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/widgets/home_page';
@@ -21,9 +21,8 @@ class _BottomNavigationDemoState extends State<HomePage>
   int _currentIndex = 0;
   List<MainTab> _navigationViews;
   List<_Page> _allPages;
-  TabBar tabBar;
 
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   final PriceTaskProvider takeProvider = new PriceTaskProvider();
 
@@ -36,22 +35,15 @@ class _BottomNavigationDemoState extends State<HomePage>
     super.initState();
 
     _allPages = <_Page>[
-      _Page(text: '最新', widget: SubTabRecentPage(takeProvider,)),
+      _Page(
+          text: '最新',
+          widget: SubTabRecentPage(
+            takeProvider,
+          )),
       _Page(text: '路演', widget: SubTabTextLivePage()),
-      _Page(text: '问答', widget: SubTabPingLun(takeProvider)),
+      _Page(text: '问答', widget: SubTabQA(takeProvider)),
       _Page(text: '金评', widget: SubTabPingLun(takeProvider)),
-
     ];
-
-    tabBar =TabBar(
-      isScrollable: false,
-      indicator: _getIndicator(),
-      tabs: _allPages.map((_Page page) {
-        print("22");
-        return Tab(text: page.text);
-      }).toList(),
-    );
-
 
     _navigationViews = <MainTab>[
       new TabIndexPage(
@@ -135,6 +127,7 @@ class _BottomNavigationDemoState extends State<HomePage>
     );
 
     return new Scaffold(
+      key: _scaffoldKey,
       body: DefaultTabController(
         length: _allPages.length,
         child: NestedScrollView(
@@ -167,12 +160,19 @@ class _BottomNavigationDemoState extends State<HomePage>
                   onPressed: () => print("Icons.message"),
                 ),
                 bottom: _currentIndex == 0
-                    ? tabBar
+                    ? TabBar(
+                        isScrollable: false,
+                        indicator: _getIndicator(),
+                        tabs: _allPages.map((_Page page) {
+                          print("22");
+                          return Tab(text: page.text);
+                        }).toList(),
+                      )
                     : null,
               )
             ];
           },
-          body:  _buildTransitionsStack(),
+          body: _buildTransitionsStack(),
         ),
       ),
       bottomNavigationBar: botNavBar,
