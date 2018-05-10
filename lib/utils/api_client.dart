@@ -36,8 +36,7 @@ class ApiClient {
 
   Future<List<NewsLive>> loadLiveNews() {
 
-   String temp ="[{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"},{\"name\":\"我压22\",\"context\":\"啥啥啥44\"}]";
-
+    String temp="[{\"name\":\"Michael\",\"context\":\"Jerry\"},{\"name\":\"Michael\",\"context\":\"Jerry\"},{\"name\":\"Michael\",\"context\":\"Jerry\"},{\"name\":\"Michael\",\"context\":\"Jerry\"}]";
     return _getTestJson(temp).then(
             (json) => json.map<NewsLive>((item) =>  NewsLive.fromJson(item)).toList());
   }

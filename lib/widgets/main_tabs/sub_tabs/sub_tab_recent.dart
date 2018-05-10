@@ -83,32 +83,35 @@ class SubTabRecentPageState extends State<SubTabRecentPage>
   @override
   void initState() {
     super.initState();
-    _loadQuote(null);
-    _loadLiveNews();
+      _loadQuote(null);
+      _loadLiveNews();
+      chatTimer = new Timer.periodic(new Duration(seconds: 5), _loadQuote);
+      if (!_urls.isEmpty) {
+        _imagePages = <Widget>[];
+        _urls.forEach((String url) {
+          _imagePages.add(new Container(
+              color: Colors.black.withAlpha(900),
+              child: new ConstrainedBox(
+                constraints: const BoxConstraints.expand(),
+                child: new Image.network(
+                  url,
+                  fit: BoxFit.cover,
+                  height: _kAppBarHeight,
+                ),
+              )));
+        });
 
-    chatTimer = new Timer.periodic(new Duration(seconds: 5), _loadQuote);
-    if (!_urls.isEmpty) {
-      _imagePages = <Widget>[];
-      _urls.forEach((String url) {
-        _imagePages.add(new Container(
-            color: Colors.black.withAlpha(900),
-            child: new ConstrainedBox(
-              constraints: const BoxConstraints.expand(),
-              child: new Image.network(
-                url,
-                fit: BoxFit.cover,
-                height: _kAppBarHeight,
-              ),
-            )));
-      });
     }
+
   }
 
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     return Container(
-      child: Column(
+      child: ListView(
+        padding: EdgeInsets.all(0.0),//listview 这里默认加了padding,现在取消掉
+        shrinkWrap: true,
         children: <Widget>[
           SizedBox.fromSize(
             size: Size.fromHeight(_kAppBarHeight),
@@ -143,8 +146,34 @@ class SubTabRecentPageState extends State<SubTabRecentPage>
                     ? new Center(
                   child: new CircularProgressIndicator(),
                 )
+                    : NewsLiveSection ( _liveNewsList.sublist(0,3), "实时资讯"
+                )),
+          )
+          ,
+          new Container(
+            margin: EdgeInsets.only(top: 10.0),
+            decoration: new BoxDecoration(color: themeData.backgroundColor),
+            child: new Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: _liveNewsList == null
+                    ? new Center(
+                  child: new CircularProgressIndicator(),
+                )
                     : NewsLiveSection (
-                  _liveNewsList
+                    _liveNewsList.sublist(0,4), "要闻推荐"
+                )),
+          )      ,
+          new Container(
+            margin: EdgeInsets.only(top: 10.0),
+            decoration: new BoxDecoration(color: themeData.backgroundColor),
+            child: new Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: _liveNewsList == null
+                    ? new Center(
+                  child: new CircularProgressIndicator(),
+                )
+                    : NewsLiveSection (
+                    _liveNewsList.sublist(0,2), "精选推荐"
                 )),
           )
         ],

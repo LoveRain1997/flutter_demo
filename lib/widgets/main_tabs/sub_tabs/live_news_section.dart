@@ -8,27 +8,23 @@ class NewsLiveSection extends StatelessWidget {
 
   final List<NewsLive> _newsLive;
 
-  NewsLiveSection(this._newsLive,);
+  final String title;
+
+  NewsLiveSection(this._newsLive,this.title);
 
   @override
   Widget build(BuildContext context) {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-          Text("实时资讯", ),
+          Text(this.title, ),
           Container(height: 8.0,),
-          Container(
-          height: 140.0,
-          child:   ListView(
-            scrollDirection: Axis.vertical,
+             Column(
             children: _newsLive.map((NewsLive news) =>
-              Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child:   NewsLiveCard(news,),
-            )
+            NewsLiveCard(news,)
+
             ).toList(),
           ),
-        )
       ],
     );
   }

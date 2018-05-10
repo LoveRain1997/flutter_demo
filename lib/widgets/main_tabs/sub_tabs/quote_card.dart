@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xftz/model/price_quote.dart';
-import 'package:flutter_xftz/utilviews/bottom_gradient.dart';
+import 'package:flutter_xftz/utilviews/quote_bg.dart';
 
 
 
@@ -57,7 +57,7 @@ class _QutoeCardState extends State<QutoeCard> {
                 ],
               ),
             ),
-            new BottomGradient(widget.vsync, widget.quote.UpsAndDowns > 0,isShowChanged),
+            new QuoteGradient(widget.vsync, widget.quote.UpsAndDowns > 0,isShowChanged),
             FadeTransition(
                 opacity: widget.animation,
                 child: new Padding(
