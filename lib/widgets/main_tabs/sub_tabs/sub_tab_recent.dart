@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_xftz/model/news_live.dart';
 import 'package:flutter_xftz/model/price_quote.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_xftz/utils/taskproviders.dart';
 import 'package:flutter_xftz/utils/utils.dart';
 import 'package:flutter_xftz/utilviews/indicator_viewpager.dart';
 import 'package:flutter_xftz/utilviews/button_menu.dart';
+import 'package:flutter_xftz/widgets/main_menu/quote_scrollable_tabs.dart';
 import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/quote_section.dart';
 import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/live_news_section.dart';
 
@@ -33,12 +36,13 @@ class SubTabRecentPageState extends State<SubTabRecentPage>
     'https://imgsa.baidu.com/news/q%3D100/sign=b060b3916f2762d0863ea0bf90ed0849/b7003af33a87e9502ca6ffde1c385343faf2b4ca.jpg'
   ];
   Timer chatTimer;
-
   List<Quote> _quoteList;
+  List<Quote> _quoteOldList = List<Quote>();
+
+
 
   List<NewsLive> _liveNewsList;
 
-  List<Quote> _quoteOldList = List<Quote>();
 
   void _loadLiveNews()async{
     try{
@@ -84,8 +88,11 @@ class SubTabRecentPageState extends State<SubTabRecentPage>
   void initState() {
     super.initState();
       _loadQuote(null);
-      _loadLiveNews();
       chatTimer = new Timer.periodic(new Duration(seconds: 5), _loadQuote);
+
+    _loadLiveNews();
+
+
       if (!_urls.isEmpty) {
         _imagePages = <Widget>[];
         _urls.forEach((String url) {
@@ -188,7 +195,14 @@ class SubTabRecentPageState extends State<SubTabRecentPage>
           icons: Icons.add_to_queue,
           text: "行情",
           colors: Colors.red,
-          onClickListener: (String text) {_loadLiveNews();},
+          onClickListener: (String text) {
+            Timeline.instantSync('Start Transition', arguments: <String, String>{
+              'from': '/',
+              'to': QutoeScrollableTabs.routeName
+            });
+            Navigator.pushNamed(context, QutoeScrollableTabs.routeName);
+
+          },
         ),
       ),
       Expanded(

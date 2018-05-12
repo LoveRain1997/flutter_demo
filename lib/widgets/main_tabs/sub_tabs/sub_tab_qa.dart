@@ -4,6 +4,7 @@ import 'package:flutter_xftz/utils/expansion_menu.dart';
 import 'package:flutter_xftz/utils/taskproviders.dart';
 import 'package:flutter_xftz/utils/utils.dart';
 import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/pinglun_card.dart';
+import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/qa_card.dart';
 
 
 class SubTabQA extends StatefulWidget {
@@ -110,7 +111,7 @@ class SubTabQAState extends State<SubTabQA> {
                 _loadNextPage();
               }
 
-              return new PingLunCard(_movies[index-1 ]);
+              return new QACard(_movies[index-1 ]);
             });
       case LoadingState.ERROR:
         return new Text(' error');

@@ -37,7 +37,7 @@ class _QutoeCardState extends State<QutoeCard> {
           fit: StackFit.expand,
           children: <Widget>[
             new Hero(
-              tag: 'Cast-Hero-${widget.quote.id}',
+              tag: 'Cast-Hero-${widget.quote.ProductCode}',
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

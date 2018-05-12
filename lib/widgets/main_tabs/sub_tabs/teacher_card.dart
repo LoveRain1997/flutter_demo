@@ -24,7 +24,7 @@ class TeacherCard extends StatelessWidget {
           fit: StackFit.expand,
           children: <Widget>[
             new Hero(
-              tag: 'Cast-Hero-${actor.name}',
+              tag: 'Cast1-Hero-${actor.name}',
               child: new FadeInImage.assetNetwork(
                 placeholder: 'assets/placeholder.jpg',
                 image: actor.context ,

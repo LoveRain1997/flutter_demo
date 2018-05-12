@@ -38,11 +38,11 @@ class _BottomNavigationDemoState extends State<HomePage>
       _Page(
           text: '最新',
           widget: SubTabRecentPage(
-            takeProvider,
+            takeProvider,key:  ObjectKey('最新')
           )),
-      _Page(text: '路演', widget: SubTabTextLivePage()),
-      _Page(text: '问答', widget: SubTabQA(takeProvider)),
-      _Page(text: '金评', widget: SubTabPingLun(takeProvider)),
+      _Page(text: '路演', widget: SubTabTextLivePage(key:  ObjectKey('路演'))),
+      _Page(text: '问答', widget: SubTabQA(takeProvider,key:  ObjectKey('问答'),)),
+      _Page(text: '金评', widget: SubTabPingLun(takeProvider,key:  ObjectKey('金评'))),
     ];
 
     _navigationViews = <MainTab>[
@@ -51,6 +51,7 @@ class _BottomNavigationDemoState extends State<HomePage>
           return page.widget;
         }).toList(),
         icon: Icon(Icons.home),
+
         title: '首页',
         vsync: this,
       ),

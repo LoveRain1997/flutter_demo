@@ -196,12 +196,12 @@ class SubTabTextLivePageState extends State<SubTabTextLivePage>
             child: new Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: new TeacherCardSection(<Teacher>[
-                  Teacher(),
-                  Teacher(),
-                  Teacher(),
-                  Teacher(),
-                  Teacher(),
-                  Teacher()
+                  Teacher(name: "老师1"),
+                  Teacher(name: "老师2"),
+                  Teacher(name: "老师3"),
+                  Teacher(name: "老师4"),
+                  Teacher(name: "老师5"),
+                  Teacher(name: "老师6"),
                 ])),
           ),
           new Flexible(

@@ -20,6 +20,7 @@ class TabLivePage      extends MainTab   {
 
 
     return new FadeTransition(
+      key: ObjectKey(title),
       opacity:  animation,
       child: new SlideTransition(
         position: new Tween<Offset>(
