@@ -7,6 +7,7 @@ import 'package:flutter_xftz/utils/taskproviders.dart';
 import 'package:flutter_xftz/utils/utils.dart';
 import 'package:flutter_xftz/utilviews/indicator_viewpager.dart';
 import 'package:flutter_xftz/utilviews/button_menu.dart';
+import 'package:flutter_xftz/widgets/main_menu/calendar_tabs.dart';
 import 'package:flutter_xftz/widgets/main_menu/quote_scrollable_tabs.dart';
 import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/quote_section.dart';
 import 'package:flutter_xftz/widgets/main_tabs/sub_tabs/live_news_section.dart';
@@ -196,12 +197,7 @@ class SubTabRecentPageState extends State<SubTabRecentPage>
           text: "行情",
           colors: Colors.red,
           onClickListener: (String text) {
-            Timeline.instantSync('Start Transition', arguments: <String, String>{
-              'from': '/',
-              'to': QutoeScrollableTabs.routeName
-            });
-            Navigator.pushNamed(context, QutoeScrollableTabs.routeName);
-
+            pushNamed(QutoeScrollableTabs.routeName);
           },
         ),
       ),
@@ -211,7 +207,7 @@ class SubTabRecentPageState extends State<SubTabRecentPage>
           text: "日历",
           colors: Colors.green,
           onClickListener: (String text) {
-            print(text);
+            pushNamed(CalendarTabsScreen.routeName);
           },
         ),
       ),
@@ -258,5 +254,14 @@ class SubTabRecentPageState extends State<SubTabRecentPage>
       }
       return newQuote;
     }).toList();
+  }
+
+  void pushNamed(String routeName) {
+    Timeline.instantSync('Start Transition', arguments: <String, String>{
+      'from': '/',
+      'to': routeName
+    });
+    Navigator.pushNamed(context,routeName);
+
   }
 }

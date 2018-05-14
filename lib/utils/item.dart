@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xftz/widgets/main_menu/calendar_tabs.dart';
 import 'package:flutter_xftz/widgets/main_menu/quote_scrollable_tabs.dart';
 
 typedef Widget GalleryDemoBuilder();
@@ -27,6 +28,10 @@ List<GalleryItem> _buildGalleryItems() {
 
       routeName: QutoeScrollableTabs.routeName,
       buildRoute: (BuildContext context) => new QutoeScrollableTabs(),
+    ),
+    new GalleryItem(
+      routeName: CalendarTabsScreen.routeName,
+      buildRoute: (BuildContext context) => new CalendarTabsScreen(),
     )
 
   ];

@@ -8,7 +8,7 @@ class NewsLiveCard extends StatefulWidget {
 
   NewsLiveCard(
     this.news, {
-    this.height: 110.0,
+    this.height: 120.0,
     this.width: 100.0,
   }) {}
 
