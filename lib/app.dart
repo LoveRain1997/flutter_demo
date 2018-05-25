@@ -9,11 +9,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 class XFHJApp extends StatelessWidget {
 
-
-
   @override
   Widget build(BuildContext context) {
-
 
     final Map<String, WidgetBuilder> _kRoutes = <String, WidgetBuilder>{};
     for (GalleryItem item in kAllGalleryItems) {

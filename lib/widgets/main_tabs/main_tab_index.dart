@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xftz/widgets/main_tabs/main_tab_super.dart';
 
-
 class TabIndexPage   extends MainTab  {
 
   TabIndexPage(   {
