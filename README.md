@@ -1,7 +1,7 @@
-# flutter_ÑİÊ¾ÏîÄ¿
+# flutter_æ¼”ç¤ºé¡¹ç›®
 
 
-ÍøÉÏÕÒÁËĞ©Àı×Ó£¬½áºÏ×Ô¼º¶Ôflutter²¼¾ÖµÄÑ§Ï°£¬Ğ´ÁË¸ö¼òµ¥demo¡£
+ç½‘ä¸Šæ‰¾äº†äº›ä¾‹å­ï¼Œç»“åˆè‡ªå·±å¯¹flutterå¸ƒå±€çš„å­¦ä¹ ï¼Œå†™äº†ä¸ªç®€å•demoã€‚
 
-![img](https://github.com/LoveRain1997/flutter_demo/blob/master/ezgif-4-41f2c04cc0.gif?raw=true)
+[MP4](https://github.com/LoveRain1997/flutter_demo/blob/master/Screenrecorder-2018-06-20-09-01-02-360.mp4)
  
